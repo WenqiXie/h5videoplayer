@@ -1,0 +1,11 @@
+{
+  "name": "videoplayer",
+  "version": "0.1.0",
+  "main": "main.js",
+  "repository": {},
+  "author": "vincixie",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}

@@ -1,0 +1,28 @@
+@charset "UTF-8";
+body, ul {
+  margin: 0;
+  padding: 0;
+}
+img, video {
+  vertical-align: middle;
+}
+body {
+  background-color: #fdfdfd;
+  position: relative;
+}
+ul {
+  list-style: none;
+}
+.none {
+  display: none;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}

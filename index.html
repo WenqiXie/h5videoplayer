@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>视频播放器</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/taoer.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <!-- electron 视频播放器 -->
+    <div class="w">
+      <header>
+        MALAYSIA CHABOR by Joyce Chu.mp4
+      </header>
+      <!-- <video data-i="0">
+        <source src="video/MALAYSIA CHABOR by Joyce Chu.mp4">
+        您的浏览器不支持 video 标签
+      </video> -->
+      <video src="video/MALAYSIA CHABOR by Joyce Chu.mp4" data-i="0">
+        您的浏览器不支持 video 标签
+      </video>
+      <div class="controls">
+        <img style="transform: rotate(180deg)" src="icon/next.png" alt="">
+        <span class="playButtons">
+          <img src="icon/play1.svg" alt="">
+          <img class="none" src="icon/pause1.svg" alt="">
+        </span>
+        <img src="icon/next.png" alt="">
+        <span id="id-video-currentTime">00:00</span>
+        <input type="range" name="" max="100" value="0">
+        <span id="id-video-duration"></span>
+      </div>
+    </div>
+    <section>
+      <input type="text" name="" value="">
+      <div class="videoList">
+        <ul>
+          <!-- <li><a href="#" false>MALAYSIA CHABOR by Joyce Chu.mp4</a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          自动取得文件名
+          点击播放视频
+        -->
+        <li class="active" data-i="0">MALAYSIA CHABOR by Joyce Chu.mp4</li>
+        <li data-i="1">花神.mp4</li>
+        <li data-i="2">媚妆.mp4</li>
+        <span style="top:50px;"></span>
+      </ul>
+    </div>
+  </section>
+    <script src="js/videolist.js" charset="utf-8"></script>
+    <script src="js/index.js" charset="utf-8"></script>
+  </body>
+</html>
