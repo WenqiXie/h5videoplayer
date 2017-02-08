@@ -5,7 +5,8 @@
 .w {
   /*width: 500px;*/
   position: relative;
-  margin: 0 138px 0 0;
+  /*margin: 0 138px 0 0;*/
+  padding: 0 138px 0 0;
 }
 video {
   width: 100%;
@@ -28,12 +29,18 @@ header:hover {
   /*background-color: pink;*/
 }
 .controls {
-  /*position: absolute;*/
+  position: absolute;
+  bottom: 0;
   width: 100%;
   padding: 5px 0;
   /*margin: 2px 0;*/
   background-color: #eee;
+  opacity: 0;
 }
+.controls:hover {
+  opacity: 1;
+}
+
 img {
   width: 24px;
 }
@@ -54,13 +61,13 @@ section {
   top: 0;
   right: 0;
   width: 138px;
-  height: 100%;
+  /*height: 100%;*/
   background-color: #ddd;
 }
 section > input { width: 134px;}
 li {
   /*display: inline-block;*/
-  width: 100%;
+  width: 124px;
   line-height: 21px;
   padding: 2px 7px;
   white-space: nowrap;
