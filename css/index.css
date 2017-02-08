@@ -11,12 +11,13 @@
 video {
   width: 100%;
   height: 100%;
+  margin: auto;
   /*border: 1px #eee solid;*/
 }
 header {
   position: absolute;
   height: 25px;
-  width: 100%;/* video 的宽度加 2 */
+  /*width: 100%;*/
   z-index: 10;
   background-color: #eee;
   font-size: 14px;
