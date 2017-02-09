@@ -25,6 +25,34 @@ var __main = function () {
     log("下一个")
     playNext()
   })
+  bindEvent(playButtons[4], 'click', function() {
+    playButtons[5].classList.remove('none')
+    playButtons[4].classList.add('none')
+
+  })
+  bindEvent(playButtons[5], 'click', function() {
+    playButtons[4].classList.remove('none')
+    playButtons[5].classList.add('none')
+  })
+  // 状态驱动事件
+  bindEvent(v, 'click', function(event) {
+    if (v.paused == true) {
+      log("已暂停")
+      play()
+    } else {
+      pause()
+    }
+  })
+
+  // 改变 title
+  var changeTitle = function() {
+    var title = e('title')
+    var li = e('li.active')
+    // log('title', title)
+    // log('li', li)
+    title.innerHTML = li.innerHTML
+  }
+  v.addEventListener("canplay", changeTitle)
 
   // 2. 控件切换视频的js
   // 得到当前的视频序号 i
@@ -36,16 +64,19 @@ var __main = function () {
     var videoName = "video/" + name
     // log("videoName", videoName)
     v.dataset.i = i
+    log("i", i)
     v.src = videoName
     // 改变 src 后不会马上播放视频，要跟一个 play 操作
     play()
+    removeClassAll("active")
+    var target = e(`li[data-i="${i}"]`)
+    target.classList.add("active")
   }
 
   var videoList = es("li")
   var playBefore = function() {
     // i 是当前序号
     var i = v.dataset.i
-    log("i", i)
     // n 是视频数量
     var n = videoList.length
     // log("n", n)
@@ -75,8 +106,6 @@ var __main = function () {
     log("target_i", target_i)
     log("target_name", target_name)
     changeVideo(target_i, target_name)
-    removeClassAll("active")
-    target.classList.add("active")
     // log("target", target)
   })
 
@@ -113,7 +142,7 @@ var __main = function () {
   }
 
   // ***********以下是控件的进度和时间部分************
-  var range = e(".controls>input")
+  var range = e("input.progress_bar")
   var ctspan = e("#id-video-currentTime")// 这是当前时间的 span 标签
   // 滑块事件，这里用 change 来实现
   range.addEventListener("change", changeCurrentTime)

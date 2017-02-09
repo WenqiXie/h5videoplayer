@@ -6,7 +6,6 @@
   /*width: 500px;*/
   position: relative;
   /*margin: 0 138px 0 0;*/
-  padding: 0 138px 0 0;
 }
 video {
   width: 100%;
@@ -17,11 +16,12 @@ video {
 header {
   position: absolute;
   height: 25px;
-  /*width: 100%;*/
+  width: 100%;
   z-index: 10;
   background-color: #eee;
   font-size: 14px;
   opacity: 0;
+  transition: opacity 1s;
   /*vertical-align: text-top;*/
   /*visibility: collapse;*/
 }
@@ -34,29 +34,41 @@ header:hover {
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 5px 0;
+  padding: 12px 0;
   /*margin: 2px 0;*/
   background-color: #eee;
   transition: opacity 1s;
   opacity: 0;
+  text-align: center;
 }
 .controls:hover {
   opacity: 1;
 }
 
-img {
-  width: 24px;
-}
-.playButtons > img {
-  width: 30px;
-}
 .controls img {
+  width: 24px;
   cursor: pointer;
 }
+.playButtons > img {
+  width: 35px;
+}
+.volume_icon > img {
+  width: 14px;
+}
 /* 这个是进度条 */
-.controls input {
+.progress_bar {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  /*vertical-align: middle;*/
+  padding: 0 3px;
+}
+
+.volume {
   vertical-align: middle;
-  width: 50%;
+  width: 80px;
 }
 /*以下是播放列表区域的css*/
 section {
@@ -66,6 +78,7 @@ section {
   width: 138px;
   /*height: 100%;*/
   background-color: #ddd;
+  /*transition: all 1s;*/
 }
 section > input { width: 134px;}
 li {
@@ -104,3 +117,26 @@ li:hover {
 .playList a:visited {
   color: #555;
 }*/
+.hiddenSection {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  background-color: #ddd;
+  height: 100px;
+  width: 30px;
+  transform: translateY(-50%);
+  /*visibility: hidden;*/
+  opacity: 0;
+}
+.hiddenSection:hover {
+  opacity: .5;
+}
+.hiddenSection > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 30px;
+  width: 18px;
+  transform: translate(-50%,-50%) rotate(180deg);
+  transition: all 0.5s;
+}
