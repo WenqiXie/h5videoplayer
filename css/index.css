@@ -55,6 +55,12 @@ header:hover {
 .volume_icon > img {
   width: 14px;
 }
+.controls > img:last-child {
+  position: absolute;
+  right: 10px;
+  width: 20px;
+  padding: 10px 10px 5px 0;
+}
 /* 这个是进度条 */
 .progress_bar {
   position: absolute;

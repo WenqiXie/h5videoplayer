@@ -1,4 +1,4 @@
-
+// ********************设置播放界面的大小*****************
 
 var winWidth = window.innerWidth//窗口的宽
 var winHeight = window.innerHeight//窗口的高
@@ -43,21 +43,28 @@ bindEvent(hiddenSection, 'click', function() {
   }
 })
 
+// ***********显示隐藏播放列表功能************
 section.addEventListener('mouseover', function() {
-  log("mouseover section")
+  // log("mouseover section")
   hiddenSection.style.opacity = ".8"
-  log("hiddenSection.style.opacity", hiddenSection.style.opacity)
+  // log("hiddenSection.style.opacity", hiddenSection.style.opacity)
   // setTimeout('hiddenSection.style.opacity = "0"', 2000)
 })
 section.addEventListener('mouseout', function() {
-  log("mouseout section")
+  // log("mouseout section")
   hiddenSection.style.opacity = "0"
-  log("hiddenSection.style.opacity", hiddenSection.style.opacity)
+  // log("hiddenSection.style.opacity", hiddenSection.style.opacity)
   // setTimeout('hiddenSection.style.opacity = "0"', 2000)
 })
 hiddenSection.addEventListener('mouseover', function() {
-  log("mouseover hiddenSection")
+  // log("mouseover hiddenSection")
   hiddenSection.style.opacity = "0.6"
-  log("hiddenSection.style.opacity", hiddenSection.style.opacity)
+  // log("hiddenSection.style.opacity", hiddenSection.style.opacity)
+  // setTimeout('hiddenSection.style.opacity = "0"', 2000)
+})
+hiddenSection.addEventListener('mouseout', function() {
+  // log("mouseout hiddenSection")
+  hiddenSection.style.opacity = "0"
+  // log("hiddenSection.style.opacity", hiddenSection.style.opacity)
   // setTimeout('hiddenSection.style.opacity = "0"', 2000)
 })

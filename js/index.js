@@ -1,39 +1,64 @@
 var __main = function () {
   //  1. 给按钮绑定事件
   var v = e('video')
-  var playButtons = es(".controls img")
+  var play_before_button = e('#id-img-before')
+  var play_next_button = e('#id-img-next')
+  var playButtons = es(".playButtons > img")
+  var volumeButtons = es(".volume_icon > img")
+
   // log("playButtons", playButtons)
   var play = function() {
     // console.log("play video");
     v.play()
-    playButtons[2].classList.remove('none')
-    playButtons[1].classList.add('none')
+    playButtons[1].classList.remove('none')
+    playButtons[0].classList.add('none')
   }
+
   var pause = function() {
     console.log("pause video");
     v.pause()
-    playButtons[1].classList.remove('none')
-    playButtons[2].classList.add('none')
+    playButtons[0].classList.remove('none')
+    playButtons[1].classList.add('none')
   }
-  bindEvent(playButtons[0], 'click', function() {
+
+  bindEvent(play_before_button, 'click', function() {
     log("上一个")
     playBefore()
   })
-  bindEvent(playButtons[1], 'click', play)
-  bindEvent(playButtons[2], 'click', pause)
-  bindEvent(playButtons[3], 'click', function() {
+
+  bindEvent(playButtons[0], 'click', play)
+
+  bindEvent(playButtons[1], 'click', pause)
+
+  bindEvent(play_next_button, 'click', function() {
     log("下一个")
     playNext()
   })
-  bindEvent(playButtons[4], 'click', function() {
-    playButtons[5].classList.remove('none')
-    playButtons[4].classList.add('none')
 
+  // 音量图标 img
+  var volume_off = function() {
+    log('静音')
+    volumeButtons[1].classList.remove('none')
+    volumeButtons[0].classList.add('none')
+    v.volume = 0
+  }
+
+  bindEvent(volumeButtons[0], 'click', volume_off)
+
+  bindEvent(volumeButtons[1], 'click', function() {
+    volumeButtons[0].classList.remove('none')
+    volumeButtons[1].classList.add('none')
+    log('取消静音')
+    v.volume = .8
   })
-  bindEvent(playButtons[5], 'click', function() {
-    playButtons[4].classList.remove('none')
-    playButtons[5].classList.add('none')
+
+  // 没有直接全屏的方法
+  var fullscreen_button = e('#id-img-fullscreen')
+  bindEvent(fullscreen_button, 'click', function() {
+    log('fullscreen')
   })
+
+
   // 状态驱动事件
   bindEvent(v, 'click', function(event) {
     if (v.paused == true) {
@@ -142,13 +167,13 @@ var __main = function () {
   }
 
   // ***********以下是控件的进度和时间部分************
-  var range = e("input.progress_bar")
+  var progress = e("input.progress_bar")
   var ctspan = e("#id-video-currentTime")// 这是当前时间的 span 标签
   // 滑块事件，这里用 change 来实现
-  range.addEventListener("change", changeCurrentTime)
+  progress.addEventListener("change", changeCurrentTime)
   function changeCurrentTime() {
-    let rangeValue = range.value
-    let timePercent = rangeValue/100
+    let progressValue = progress.value
+    let timePercent = progressValue/100
     // log("timePercent", timePercent)
     v.currentTime = v.duration * timePercent
     currentTime(ctspan)
@@ -163,9 +188,9 @@ var __main = function () {
     ctspan.innerHTML = ct
     // 同时改变进度条
     let percentTime = currentTime/dt
-    range.value = percentTime * 100
+    progress.value = percentTime * 100
     // log("dt", dt)
-    // log("range.value", range.value)
+    // log("progress.value", progress.value)
   }
   var int1
   var durationTime = function() {
@@ -206,8 +231,25 @@ var __main = function () {
   //   }
   // )
 
-  // ********************设置播放界面的大小*****************
-  // 见 view.js
+  // ******音量部分******
+  var volume_range = e('input.volume')
+  log('volume_range', volume_range)
+  bindEvent(v, 'volumechange', function() {
+    // 当音量进度条的值改变的时候，音量的大小改变
+    log("volumechange")
+    volume_range.value = v.volume*100
+    if (v.volume == 0) {
+      volume_off()
+    } else {
+      volumeButtons[0].classList.remove('none')
+      volumeButtons[1].classList.add('none')
+    }
+  })
+  bindEvent(volume_range, 'change', function() {
+    // 当音量进度条的值改变的时候，音量的大小改变
+    log("volume_range change")
+    v.volume = volume_range.value/100
+  })
 }
 
 __main()
