@@ -75,7 +75,7 @@ var __main = function () {
     var li = e('li.active')
     // log('title', title)
     // log('li', li)
-    title.innerHTML = li.innerHTML
+    title.innerHTML = li.textContent
   }
   // v.addEventListener("canplay", changeTitle)
 
@@ -118,7 +118,7 @@ var __main = function () {
     // log("n", n)
     var nextVideoItem = (i + n - 1)%n
     // log("nextVideoItem", nextVideoItem)
-    var name = videoList[nextVideoItem].innerHTML
+    var name = videoList[nextVideoItem].textContent
     changeVideo(nextVideoItem, name)
   }
   var playNext = function() {
@@ -130,55 +130,25 @@ var __main = function () {
     // log("n", n)
     var nextVideoItem = (i + 1)%n
     // log("nextVideoItem", nextVideoItem)
-    var name = videoList[nextVideoItem].innerHTML
+    var name = videoList[nextVideoItem].textContent
     changeVideo(nextVideoItem, name)
   }
    // 3. 鼠标双击切换 video
    // 4. 并且给正在播放的视频加上选项卡效果
-  // bindAll("li", "click", function(event) {
-  //   var target = event.target
-  //   var target_i = target.dataset.i
-  //   var target_name = target.innerHTML
-  //   log("target_i", target_i)
-  //   log("target_name", target_name)
-  //   changeVideo(target_i, target_name)
-  //   // log("target", target)
-  // })
+
   var ul = e('.videoList>ul')
-  bindAll("ul", "dblclick", function(event) {
+
+  bindEvent(ul, "dblclick", function(event) {
+    log("event.target", event.target)
+    // var target = event.target.parentElement
     var target = event.target
+    log("target", target)
     var target_i = target.dataset.i
-    var target_name = target.innerHTML
-    // log("target_i", target_i)
-    // log("target_name", target_name)
+    var target_name = target.textContent
     changeVideo(target_i, target_name)
   })
   // 需要优化一下，双击会选中文字
 
-
-
-  // 在播放列表的位置，加一个鼠标悬停显示文字的功能
-  var span = e(".videoList span")
-  // log("span", span)
-  bindAll("li", "mouseover", function(event) {
-    var target = event.target
-    var target_name = target.innerHTML
-    var mouseY = event.y
-    var top = mouseY + 20
-    // log("target_name", target_name)
-    // log("mouseX mouseY", mouseX, mouseY)
-    span.innerHTML = target_name
-    span.style.cssText = `top:${top}px;display:inline;`
-  })
-  bindAll("li", "mouseout", function(event) {
-    var target = event.target
-    var target_name = target.innerHTML
-    // log("target_name", target_name)
-    span.innerHTML = ""
-    span.style.cssText = `display:none;`
-    // span.classList.add("none")
-    // log("event", event)
-  })
 
  // 实现播放时间的变化
   var timeTrans = function(time) {

@@ -89,14 +89,20 @@ section {
 section > input { width: 134px;}
 li {
   /*display: inline-block;*/
-  width: 124px;
+  position: relative;
+  width: 115px;
   line-height: 21px;
-  padding: 2px 7px;
+  padding: 2px 16px 2px 7px;
   white-space: nowrap;
   overflow: hidden;
   background-color: #ccc;
   font-size: 14px;
+  color: #222;
   text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+  -moz-user-select:none;/*火狐*/
+  -webkit-user-select:none;/*webkit浏览器*/
+  -ms-user-select:none;/*IE10*/
+  user-select:none;
 }
 li:hover {
   background-color: #bbb;
@@ -109,7 +115,29 @@ li:hover {
 /*.videoList {
   position: relative;
 }*/
-.videoList span {
+/*li > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 138px;
+  height: 25px;
+  background-color: #fff;
+  opacity: .1;
+}*/
+
+li > img {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 15px;
+  opacity: .1;
+}
+li > img:hover {
+  background-color: #ddd;
+  opacity: .9;
+}
+
+.videoList > span {
   display: none;
   position: absolute;
   padding: 5px;

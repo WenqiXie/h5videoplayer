@@ -1,7 +1,6 @@
 "use strict"
 // const request = require('request')
 // const cheerio = require('cheerio')
-const fs = require('fs')
 const path = require('path')
 
 const ModelFiles = function(parsedpath) {
@@ -13,7 +12,7 @@ var arr = []
 
 var newItem = function(i, name) {
 	return `
-	<li data-i="${i}">${name}</li>
+	<li title="${name}" data-i="${i}">${name}</li>
 	`
 }
 
@@ -33,12 +32,14 @@ const showList = function() {
 	// log('ul', ul)
 	ul.innerHTML = ''
 	for (var i = 0; i < al; i++) {
-		let name = arr[i].name
-		newItem = `
-		<li data-i="${i}">${name}</li>
-		`
-		// log('newItem', newItem)
-		ul.insertAdjacentHTML('beforeend', newItem)
+		if (arr[i] != null) {
+			let name = arr[i].name
+			newItem = `
+			<li data-i="${i}">${name}<img src="icon/close.png" alt=""></li>
+			`
+			// log('newItem', newItem)
+			ul.insertAdjacentHTML('beforeend', newItem)
+		}
 	}
 }
 
@@ -54,7 +55,14 @@ holder.ondragleave = holder.ondragend = () => {
 
 holder.ondrop = (e) => {
 	e.preventDefault()
-	for (let f of e.dataTransfer.files) {
+	log('e_1', e)
+	// if (e.target.tagName == "VIDEO") {
+	// 	log('e.target.tagName == "VIDEO"，播放第一个视频')
+	// }
+	// for (let f of e.dataTransfer.files) {
+	var flength =  e.dataTransfer.files.length
+	for (let i = 0; i < flength; i++) {
+		var f = e.dataTransfer.files[i]
 		var file_path = f.path
 		// console.log("file_path", file_path)
 		// C:\Users\qiqi\Documents\前端\过年小项目\视频播放器\video\媚妆.mp4
@@ -68,14 +76,12 @@ holder.ondrop = (e) => {
 		// 	ext: ".mp4",
 		// 	name: "媚妆"
 		// }
-		// v.src = file_path
-		// play()
 		// 用 video 的信息新建一个对象
 		var mf = new ModelFiles(parsedpath)
 		// 设置新数据的 id
-		var d = arr.length - 1
+		var d = arr[arr.length - 1]
 		// log('d', d)
-		if (d == -1) {
+		if (d == undefined) {
 			mf.id = 0
 		} else {
 			mf.id = d.id + 1
@@ -87,13 +93,27 @@ holder.ondrop = (e) => {
 		// 	name:"媚妆.mp4"
 		// }
 		// 要把之前的 localStorage.ModelFiles 取出来，赋值给 arr
-		arr = arr = JSON.parse(localStorage.ModelFiles)
+		arr = JSON.parse(localStorage.ModelFiles)
 		arr.push(mf)
 		// log('arr1', arr)
 		var mfjson = JSON.stringify(arr)
 		// log('mfjson', mfjson)
 		localStorage.ModelFiles = mfjson
 		showList()
+		if (i == 0) {
+			// log('mf.id', mf.id)
+			var iii = String(mf.id)
+			var firstLi = document.querySelector(`li[data-i="${iii}"]`)
+			firstLi.classList.add('active')
+			var ppp = firstLi.parentElement
+			// log('firstLi', firstLi)
+			log('ppp', ppp)
+			var v = document.querySelector('video')
+			v.dataset.i = iii
+			v.src = file_path
+			// firstLi.click()
+			// firstLi.click()
+		}
 		// // 把 数据 加入 this.data 数组
 		// this.data.push(m)
 		// // 把 最新数据 保存到文件中
@@ -105,5 +125,41 @@ holder.ondrop = (e) => {
 	}
 	return false;
 }
+
+var ul = e('.videoList>ul')
+//
+const deleteItem = function(itemId) {
+	let arr = JSON.parse(localStorage.ModelFiles)
+	// log('itemId', itemId)
+	// let i = Number(itemId)
+	// log('i', i)
+	if (itemId !== arr.length-1) {
+		// 不是最后一个元素，与最后一个调换
+		[arr[itemId], arr[arr.length-1]] = [arr[arr.length-1], arr[itemId]]
+	}
+	// 出栈操作
+	arr.pop()
+	// delete arr[itemId]
+	// log('arr[itemId]', arr[itemId])
+	log('arr_d', arr)
+	localStorage.ModelFiles = JSON.stringify(arr)
+}
+
+// 单击 x 删除当前条目
+bindEvent(ul, "click", function(event) {
+	var target = event.target
+	// log("target_i", target)
+	// log("target.tagName", target.tagName)
+	// log("event_i", event)
+	if (target.tagName == 'IMG') {
+		log('删除当前条目')
+		let parent = target.parentElement
+		// log("target.parentElement", target.parentElement)
+		let itemId = parent.dataset.i
+		// log("itemId", itemId)
+		deleteItem(itemId)
+		parent.remove()
+	}
+})
 
 showList()
