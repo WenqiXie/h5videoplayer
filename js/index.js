@@ -77,7 +77,11 @@ var __main = function () {
     // log('li', li)
     title.innerHTML = li.innerHTML
   }
-  v.addEventListener("canplay", changeTitle)
+  // v.addEventListener("canplay", changeTitle)
+
+  // 视频的时长已改变
+  v.addEventListener("durationchange", changeTitle)
+
 
   // 2. 控件切换视频的js
   // 得到当前的视频序号 i
@@ -86,11 +90,18 @@ var __main = function () {
   // log("vs", vs)
 
   var changeVideo = function(i, name) {
-    var videoName = "video/" + name
+    // 这里需要取得 id
+    var mfjson = localStorage.ModelFiles
+    // log('mfjson', mfjson)
+    // log('typeof mfjson', typeof mfjson)
+    var arr = JSON.parse(mfjson)
+    // log('arr[i].dir', arr[i].dir)
+    var pathdir = arr[i].dir
+    var videoSrc = pathdir + '\\' + name
     // log("videoName", videoName)
     v.dataset.i = i
-    log("i", i)
-    v.src = videoName
+    // log("i", i)
+    v.src = videoSrc
     // 改变 src 后不会马上播放视频，要跟一个 play 操作
     play()
     removeClassAll("active")
@@ -106,7 +117,7 @@ var __main = function () {
     var n = videoList.length
     // log("n", n)
     var nextVideoItem = (i + n - 1)%n
-    log("nextVideoItem", nextVideoItem)
+    // log("nextVideoItem", nextVideoItem)
     var name = videoList[nextVideoItem].innerHTML
     changeVideo(nextVideoItem, name)
   }
@@ -118,21 +129,33 @@ var __main = function () {
     var n = videoList.length
     // log("n", n)
     var nextVideoItem = (i + 1)%n
-    log("nextVideoItem", nextVideoItem)
+    // log("nextVideoItem", nextVideoItem)
     var name = videoList[nextVideoItem].innerHTML
     changeVideo(nextVideoItem, name)
   }
-   // 3. 鼠标点击切换 video
+   // 3. 鼠标双击切换 video
    // 4. 并且给正在播放的视频加上选项卡效果
-  bindAll("li", "click", function(event) {
+  // bindAll("li", "click", function(event) {
+  //   var target = event.target
+  //   var target_i = target.dataset.i
+  //   var target_name = target.innerHTML
+  //   log("target_i", target_i)
+  //   log("target_name", target_name)
+  //   changeVideo(target_i, target_name)
+  //   // log("target", target)
+  // })
+  var ul = e('.videoList>ul')
+  bindAll("ul", "dblclick", function(event) {
     var target = event.target
     var target_i = target.dataset.i
     var target_name = target.innerHTML
-    log("target_i", target_i)
-    log("target_name", target_name)
+    // log("target_i", target_i)
+    // log("target_name", target_name)
     changeVideo(target_i, target_name)
-    // log("target", target)
   })
+  // 需要优化一下，双击会选中文字
+
+
 
   // 在播放列表的位置，加一个鼠标悬停显示文字的功能
   var span = e(".videoList span")
@@ -225,18 +248,12 @@ var __main = function () {
     clearInterval(int1)
   })
 
-  // 视频的时长已改变
-  // v.addEventListener("durationchange", function() {
-  //   log("视频的时长已改变")
-  //   }
-  // )
-
   // ******音量部分******
   var volume_range = e('input.volume')
-  log('volume_range', volume_range)
+  // log('volume_range', volume_range)
   bindEvent(v, 'volumechange', function() {
     // 当音量进度条的值改变的时候，音量的大小改变
-    log("volumechange")
+    // log("volumechange")
     volume_range.value = v.volume*100
     if (v.volume == 0) {
       volume_off()
@@ -247,9 +264,10 @@ var __main = function () {
   })
   bindEvent(volume_range, 'change', function() {
     // 当音量进度条的值改变的时候，音量的大小改变
-    log("volume_range change")
+    // log("volume_range change")
     v.volume = volume_range.value/100
   })
+
 }
 
 __main()
