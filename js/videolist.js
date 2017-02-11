@@ -10,36 +10,39 @@ const ModelFiles = function(parsedpath) {
 
 var arr = []
 
-var newItem = function(i, name) {
-	return `
-	<li title="${name}" data-i="${i}">${name}</li>
-	`
-}
+var ul = e('.videoList>ul')
+
+
+var newItem = ``
 
 // localStorage.ModelFiles 的初始化
 if (localStorage.ModelFiles == undefined) {
 	localStorage.ModelFiles = '[]'
 }
 
+const appendNewItem = function(ul, arr, i) {
+	log('arr appendNewItem', arr)
+	log('i appendNewItem ', i)
+	var name = arr[i].name
+	newItem = `
+	<li data-i="${i}">${name}<img src="icon/close.png" alt=""></li>
+	`
+	ul.insertAdjacentHTML('beforeend', newItem)
+}
+
 const showList = function() {
 	// 加载播放列表
 	// console.log('createWindow')
 	var mfjson = localStorage.ModelFiles
-	var arr = JSON.parse(mfjson)
-	// log('arr0', arr)
+	arr = JSON.parse(mfjson)
+	log('arr showList', arr)
 	var al = arr.length
-	var ul = e('.videoList>ul')
 	// log('ul', ul)
 	ul.innerHTML = ''
 	for (var i = 0; i < al; i++) {
-		if (arr[i] != null) {
-			let name = arr[i].name
-			newItem = `
-			<li data-i="${i}">${name}<img src="icon/close.png" alt=""></li>
-			`
-			// log('newItem', newItem)
-			ul.insertAdjacentHTML('beforeend', newItem)
-		}
+		log('showList i', i)
+
+		appendNewItem(ul, arr, i)
 	}
 }
 
@@ -55,13 +58,14 @@ holder.ondragleave = holder.ondragend = () => {
 
 holder.ondrop = (e) => {
 	e.preventDefault()
-	log('e_1', e)
-	// if (e.target.tagName == "VIDEO") {
-	// 	log('e.target.tagName == "VIDEO"，播放第一个视频')
-	// }
+	// log('DragEvent', e)
 	// for (let f of e.dataTransfer.files) {
 	var flength =  e.dataTransfer.files.length
-	for (let i = 0; i < flength; i++) {
+	console.log("flength", flength)
+	arr = JSON.parse(localStorage.ModelFiles)
+	for (var i = 0; i < flength; i++) {
+		log('flength i', i)
+		console.log("flength", flength)
 		var f = e.dataTransfer.files[i]
 		var file_path = f.path
 		// console.log("file_path", file_path)
@@ -93,26 +97,30 @@ holder.ondrop = (e) => {
 		// 	name:"媚妆.mp4"
 		// }
 		// 要把之前的 localStorage.ModelFiles 取出来，赋值给 arr
-		arr = JSON.parse(localStorage.ModelFiles)
 		arr.push(mf)
-		// log('arr1', arr)
-		var mfjson = JSON.stringify(arr)
-		// log('mfjson', mfjson)
-		localStorage.ModelFiles = mfjson
-		showList()
+		// log('arr2 ondrop', arr)
+		var iii = mf.id
+		log('iii', iii)
+		appendNewItem(ul, arr, iii)
 		if (i == 0) {
-			// log('mf.id', mf.id)
-			var iii = String(mf.id)
+			log('iii', iii)
 			var firstLi = document.querySelector(`li[data-i="${iii}"]`)
 			firstLi.classList.add('active')
-			var ppp = firstLi.parentElement
-			// log('firstLi', firstLi)
-			log('ppp', ppp)
+			// var ppp = firstLi.parentElement
+			log('firstLi', firstLi)
+			// log('ppp', ppp)
 			var v = document.querySelector('video')
 			v.dataset.i = iii
 			v.src = file_path
+			var playButtons = es(".playButtons > img")
+			v.play()
+	    playButtons[1].classList.remove('none')
+	    playButtons[0].classList.add('none')
 			// firstLi.click()
 			// firstLi.click()
+			if (e.target.tagName == "VIDEO") {
+				log('e.target.tagName == "VIDEO"，播放第一个视频')
+			}
 		}
 		// // 把 数据 加入 this.data 数组
 		// this.data.push(m)
@@ -123,19 +131,35 @@ holder.ondrop = (e) => {
 		//
 		// fs.append
 	}
+	var mfjson = JSON.stringify(arr)
+	log('mfjson 保存到本地', mfjson)
+	localStorage.ModelFiles = mfjson
 	return false;
 }
 
 var ul = e('.videoList>ul')
 //
 const deleteItem = function(itemId) {
-	let arr = JSON.parse(localStorage.ModelFiles)
+	arr = JSON.parse(localStorage.ModelFiles)
 	// log('itemId', itemId)
 	// let i = Number(itemId)
 	// log('i', i)
-	if (itemId !== arr.length-1) {
-		// 不是最后一个元素，与最后一个调换
-		[arr[itemId], arr[arr.length-1]] = [arr[arr.length-1], arr[itemId]]
+	if (itemId != arr.length-1) {
+		// localStorage.ModelFiles = '[]'
+		// 要删除的元素不是最后一个元素，与最后一个调换，但 ID 不能变
+		// log('deleteItem arr', arr)
+		// log('itemId', typeof(itemId))
+		log('arr[itemId]', arr[itemId])
+		// log('arr[itemId].id', arr[itemId].id)
+		// log('arr[arr.length-1].id', arr[arr.length-1].id)
+		log('arr[arr.length-1]', arr[arr.length-1])
+		// log('arr.length-1', arr.length-1)
+		// var lastId = arr[arr.length-1].id
+		// log('lastId', lastId)
+		// log('arr[arr.length-1]', arr[arr.length-1])
+		arr[itemId] = arr[arr.length-1]
+		arr[itemId].id = Number(itemId)
+		// [arr[itemId].id, arr[arr.length-1].id] = [lastId, arr[itemId].id]
 	}
 	// 出栈操作
 	arr.pop()
@@ -156,7 +180,7 @@ bindEvent(ul, "click", function(event) {
 		let parent = target.parentElement
 		// log("target.parentElement", target.parentElement)
 		let itemId = parent.dataset.i
-		// log("itemId", itemId)
+		log("itemId 删除", itemId)
 		deleteItem(itemId)
 		parent.remove()
 	}
