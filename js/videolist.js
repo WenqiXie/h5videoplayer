@@ -12,9 +12,6 @@ var arr = []
 
 var ul = e('.videoList>ul')
 
-
-var newItem = ``
-
 // localStorage.ModelFiles 的初始化
 if (localStorage.ModelFiles == undefined) {
 	localStorage.ModelFiles = '[]'
@@ -24,7 +21,7 @@ const appendNewItem = function(ul, arr, i) {
 	log('arr appendNewItem', arr)
 	log('i appendNewItem ', i)
 	var name = arr[i].name
-	newItem = `
+	var newItem = `
 	<li data-i="${i}">${name}<img src="icon/close.png" alt=""></li>
 	`
 	ul.insertAdjacentHTML('beforeend', newItem)
@@ -33,8 +30,7 @@ const appendNewItem = function(ul, arr, i) {
 const showList = function() {
 	// 加载播放列表
 	// console.log('createWindow')
-	var mfjson = localStorage.ModelFiles
-	arr = JSON.parse(mfjson)
+	arr = JSON.parse(localStorage.ModelFiles)
 	log('arr showList', arr)
 	var al = arr.length
 	// log('ul', ul)
@@ -150,16 +146,11 @@ const deleteItem = function(itemId) {
 		// log('deleteItem arr', arr)
 		// log('itemId', typeof(itemId))
 		log('arr[itemId]', arr[itemId])
-		// log('arr[itemId].id', arr[itemId].id)
-		// log('arr[arr.length-1].id', arr[arr.length-1].id)
 		log('arr[arr.length-1]', arr[arr.length-1])
-		// log('arr.length-1', arr.length-1)
-		// var lastId = arr[arr.length-1].id
-		// log('lastId', lastId)
-		// log('arr[arr.length-1]', arr[arr.length-1])
 		arr[itemId] = arr[arr.length-1]
 		arr[itemId].id = Number(itemId)
-		// [arr[itemId].id, arr[arr.length-1].id] = [lastId, arr[itemId].id]
+		// 注意 li 元素也需要改 dataset.i
+
 	}
 	// 出栈操作
 	arr.pop()
@@ -182,6 +173,9 @@ bindEvent(ul, "click", function(event) {
 		let itemId = parent.dataset.i
 		log("itemId 删除", itemId)
 		deleteItem(itemId)
+		// 把最后一个 li 标签放到他的后面
+		var lastLi = ul.lastChild
+		parent.insertAdjacentHTML('afterend', )
 		parent.remove()
 	}
 })

@@ -52,6 +52,12 @@ var __main = function () {
     v.volume = .8
   })
 
+  // 停止视频播放
+  var stopImg = e('#id-img-stop')
+  stopImg.addEventListener('click', function() {
+    v.src = ''
+  })
+
   // 没有直接全屏的方法
   var fullscreen_button = e('#id-img-fullscreen')
   bindEvent(fullscreen_button, 'click', function() {
@@ -160,6 +166,12 @@ var __main = function () {
   }
 
   // ***********以下是控件的进度和时间部分************
+  // 播放速率
+  var playbackRateRange = e('#id-video-playbackRate')
+  playbackRateRange.addEventListener("change", function() {
+    log('playbackRateRange.value', playbackRateRange.value)
+    v.playbackRate = playbackRateRange.value
+  })
   var progress = e("input.progress_bar")
   var ctspan = e("#id-video-currentTime")// 这是当前时间的 span 标签
   // 滑块事件，这里用 change 来实现
@@ -219,7 +231,7 @@ var __main = function () {
   })
 
   // ******音量部分******
-  var volume_range = e('input.volume')
+  var volume_range = e('input.volume_range')
   // log('volume_range', volume_range)
   bindEvent(v, 'volumechange', function() {
     // 当音量进度条的值改变的时候，音量的大小改变

@@ -29,6 +29,7 @@ header:hover {
   opacity: 0.5;
   /*background-color: pink;*/
 }
+
 .controls {
   position: absolute;
   left: 0;
@@ -38,7 +39,7 @@ header:hover {
   /*margin: 2px 0;*/
   background-color: #eee;
   transition: opacity 1s;
-  opacity: 0;
+  /*opacity: 0;*/
   text-align: center;
 }
 .controls:hover {
@@ -61,8 +62,18 @@ header:hover {
   width: 20px;
   padding: 10px 10px 5px 0;
 }
+
+input#id-video-playbackRate {
+  position: absolute;
+  top: 23px;
+  left: 5px;
+  box-sizing: border-box;
+  width: 50px;
+  padding: 0 3px;
+}
+
 /* 这个是进度条 */
-.progress_bar {
+input.progress_bar {
   position: absolute;
   top: -5px;
   left: 0;
@@ -72,7 +83,7 @@ header:hover {
   padding: 0 3px;
 }
 
-.volume {
+input.volume_range {
   vertical-align: middle;
   width: 80px;
 }

@@ -18,6 +18,15 @@ if (localStorage.ModelFiles == undefined) {
 
 var ul = e('.videoList>ul')
 
+// 面向对象的改造
+var vl = function() {
+	this.arr = JSON.parse(localStorage.ModelFiles)
+}
+
+
+
+
+
 // 拖拽时，添加新项目
 const appendNewItem = function(ul, arr, i) {
 	var name = arr[i].name
