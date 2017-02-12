@@ -12,6 +12,11 @@ body {
   position: relative;
   overflow: hidden;
 }
+.w, section {
+  box-sizing: border-box;
+  border: 1px solid #bbb;
+  background-color: #dedede;
+}
 ul {
   list-style: none;
 }

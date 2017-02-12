@@ -3,9 +3,7 @@
   display: none;
 }
 .w {
-  /*width: 500px;*/
   position: relative;
-  /*margin: 0 138px 0 0;*/
 }
 video {
   width: 100%;
@@ -35,11 +33,14 @@ header:hover {
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 12px 0;
+  padding: 20px 0 12px;
   /*margin: 2px 0;*/
+  /*box-sizing: border-box;
+  border: 1px solid #333;
+  background-color: #444;*/
   background-color: #eee;
   transition: opacity 1s;
-  /*opacity: 0;*/
+  opacity: 0;
   text-align: center;
 }
 .controls:hover {
@@ -56,31 +57,66 @@ header:hover {
 .volume_icon > img {
   width: 14px;
 }
-.controls > img:last-child {
+.controls > img#id-img-fullscreen {
   position: absolute;
   right: 10px;
-  width: 20px;
+  width: 15px;
   padding: 10px 10px 5px 0;
 }
 
-input#id-video-playbackRate {
+/* 这个是进度条 */
+.progress_bar {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+  width: 100%;
+  padding: 0 30px;
+  /*background-color: pink;*/
+}
+
+.progress_bar > #id-video-currentTime {
+  position: absolute;
+  left: 3px;
+}
+.progress_bar > #id-video-duration {
+  position: absolute;
+  top: 0px;
+  right: 3px;
+}
+
+input#id-input-progress_bar {
+  display: inline-block;
+  width: 100%;
+}
+
+/* 播放速率条 */
+.playbackRate {
   position: absolute;
   top: 23px;
   left: 5px;
   box-sizing: border-box;
-  width: 50px;
-  padding: 0 3px;
+  width: 100px;
 }
 
-/* 这个是进度条 */
-input.progress_bar {
+.playbackRate > img {
+  width: 18px;
+}
+
+.playbackRate > input#id-video-playbackRate {
+  width: 50px;
+}
+
+.playbackRate > span {
   position: absolute;
-  top: -5px;
-  left: 0;
-  box-sizing: border-box;
-  width: 100%;
-  /*vertical-align: middle;*/
-  padding: 0 3px;
+  display: none;
+  top: 2px;
+  left: 93px;
+  vertical-align: middle;
+}
+.playbackRate:hover > span {
+  display: inline;
 }
 
 input.volume_range {
@@ -166,7 +202,7 @@ li > img:hover {
   position: absolute;
   top: 50%;
   right: 0;
-  background-color: #ddd;
+  background-color: #cbcbcb;
   height: 100px;
   width: 30px;
   transform: translateY(-50%);

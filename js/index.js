@@ -6,87 +6,40 @@ var __main = function () {
   var playButtons = es(".playButtons > img")
   var volumeButtons = es(".volume_icon > img")
 
-  // log("playButtons", playButtons)
-  var play = function() {
-    // console.log("play video");
-    v.play()
-    playButtons[1].classList.remove('none')
-    playButtons[0].classList.add('none')
-  }
-
-  var pause = function() {
-    console.log("pause video");
-    v.pause()
-    playButtons[0].classList.remove('none')
-    playButtons[1].classList.add('none')
-  }
-
   bindEvent(play_before_button, 'click', function() {
     log("上一个")
     playBefore()
   })
 
-  bindEvent(playButtons[0], 'click', play)
+  bindEvent(playButtons[0], 'click', v.play())
 
-  bindEvent(playButtons[1], 'click', pause)
+  bindEvent(playButtons[1], 'click', v.pause())
 
   bindEvent(play_next_button, 'click', function() {
     log("下一个")
     playNext()
   })
 
-  // 音量图标 img
-  var volume_off = function() {
-    log('静音')
-    volumeButtons[1].classList.remove('none')
-    volumeButtons[0].classList.add('none')
-    v.volume = 0
-  }
-
-  bindEvent(volumeButtons[0], 'click', volume_off)
-
-  bindEvent(volumeButtons[1], 'click', function() {
-    volumeButtons[0].classList.remove('none')
-    volumeButtons[1].classList.add('none')
-    log('取消静音')
-    v.volume = .8
+  // 点击视频区域可以暂停或播放
+  bindEvent(v, 'click', function(event) {
+    if (v.paused == true) {
+      log("已暂停")
+      v.play()
+    } else {
+      v.pause()
+    }
   })
 
   // 停止视频播放
   var stopImg = e('#id-img-stop')
   stopImg.addEventListener('click', function() {
     v.src = ''
-  })
-
-  // 没有直接全屏的方法
-  var fullscreen_button = e('#id-img-fullscreen')
-  bindEvent(fullscreen_button, 'click', function() {
-    log('fullscreen')
-  })
-
-
-  // 状态驱动事件
-  bindEvent(v, 'click', function(event) {
-    if (v.paused == true) {
-      log("已暂停")
-      play()
-    } else {
-      pause()
-    }
-  })
-
-  // 改变 title
-  var changeTitle = function() {
     var title = e('title')
-    var li = e('li.active')
-    // log('title', title)
-    // log('li', li)
-    title.innerHTML = li.textContent
-  }
-  // v.addEventListener("canplay", changeTitle)
+    title.innerHTML = 'HTML5桌面播放器'
+    var progressDiv = e('.progress_bar')
+    progressDiv.classList.add('none')
+  })
 
-  // 视频的时长已改变
-  v.addEventListener("durationchange", changeTitle)
 
 
   // 2. 控件切换视频的js
@@ -94,13 +47,9 @@ var __main = function () {
   // 下一个视频序号 i + 1
   // var vs = e("source")
   // log("vs", vs)
-
   var changeVideo = function(i, name) {
     // 这里需要取得 id
-    var mfjson = localStorage.ModelFiles
-    // log('mfjson', mfjson)
-    // log('typeof mfjson', typeof mfjson)
-    var arr = JSON.parse(mfjson)
+    var arr = JSON.parse(localStorage.ModelFiles)
     // log('arr[i].dir', arr[i].dir)
     var pathdir = arr[i].dir
     var videoSrc = pathdir + '\\' + name
@@ -108,14 +57,15 @@ var __main = function () {
     v.dataset.i = i
     // log("i", i)
     v.src = videoSrc
-    // 改变 src 后不会马上播放视频，要跟一个 play 操作
-    play()
+    v.play()
+    // 改变 src 后再改变播放列表的样式
     removeClassAll("active")
     var target = e(`li[data-i="${i}"]`)
     target.classList.add("active")
   }
 
   var videoList = es("li")
+
   var playBefore = function() {
     // i 是当前序号
     var i = v.dataset.i
@@ -127,6 +77,7 @@ var __main = function () {
     var name = videoList[nextVideoItem].textContent
     changeVideo(nextVideoItem, name)
   }
+
   var playNext = function() {
     // i 是当前序号
     var i = v.dataset.i
@@ -139,13 +90,13 @@ var __main = function () {
     var name = videoList[nextVideoItem].textContent
     changeVideo(nextVideoItem, name)
   }
+
+
    // 3. 鼠标双击切换 video
    // 4. 并且给正在播放的视频加上选项卡效果
-
   var ul = e('.videoList>ul')
 
   bindEvent(ul, "dblclick", function(event) {
-    log("event.target", event.target)
     // var target = event.target.parentElement
     var target = event.target
     log("target", target)
@@ -156,24 +107,18 @@ var __main = function () {
   // 需要优化一下，双击会选中文字
 
 
- // 实现播放时间的变化
-  var timeTrans = function(time) {
-    var minute = Math.floor(time / 60)
-    var second = Math.floor(time % 60)
-    var t = `${zfill(minute, 2)}:${zfill(second, 2)}`
-    // log('t', t)
-    return t
-  }
-
   // ***********以下是控件的进度和时间部分************
   // 播放速率
-  var playbackRateRange = e('#id-video-playbackRate')
-  playbackRateRange.addEventListener("change", function() {
-    log('playbackRateRange.value', playbackRateRange.value)
-    v.playbackRate = playbackRateRange.value
+  var rateRange = e('#id-video-playbackRate')
+  rateRange.addEventListener("change", function() {
+    log('rateRange.value', rateRange.value)
+    v.playbackRate = rateRange.value
+    var rateSpan = e('#id-span-playbackRate')
+    rateSpan.innerText = rateRange.value
   })
-  var progress = e("input.progress_bar")
-  var ctspan = e("#id-video-currentTime")// 这是当前时间的 span 标签
+
+  // 播放进度
+  var progress = e("input#id-input-progress_bar")
   // 滑块事件，这里用 change 来实现
   progress.addEventListener("change", changeCurrentTime)
   function changeCurrentTime() {
@@ -181,54 +126,8 @@ var __main = function () {
     let timePercent = progressValue/100
     // log("timePercent", timePercent)
     v.currentTime = v.duration * timePercent
-    currentTime(ctspan)
   }
 
-  var currentTime = function(ctspan) {
-    // 当前时间的变化
-    var currentTime = v.currentTime
-    var dt = v.duration
-    var ct = timeTrans(currentTime)
-    // log('ct', ct)
-    ctspan.innerHTML = ct
-    // 同时改变进度条
-    let percentTime = currentTime/dt
-    progress.value = percentTime * 100
-    // log("dt", dt)
-    // log("progress.value", progress.value)
-  }
-  var int1
-  var durationTime = function() {
-    // log("可播放，触发 canplay 事件")
-    var dspan = e('#id-video-duration')
-    var d = timeTrans(v.duration)
-    // log('d', d)
-    dspan.innerHTML = d
-  }
-
-  // 当可以播放的时候，触发 canplay 事件
-  v.addEventListener("canplay", durationTime)
-
-  // 当开始播放的时候，触发 play 事件
-  v.addEventListener("play", function() {
-    // log("触发 play 事件")
-    // log("int1", int1)
-    if (int1 !== undefined) {
-      // log("int1有值")
-      clearInterval(int1)
-    }
-    // 每隔 0.5s 更新一次当前时间
-    int1 = setInterval(function() {
-      currentTime(ctspan)
-    }, 500)
-  })
-
-  // 当暂停的时候，触发 pause 事件
-  v.addEventListener("pause", function() {
-    // log("pause")
-    // 每隔 0.5s 更新一次当前时间
-    clearInterval(int1)
-  })
 
   // ******音量部分******
   var volume_range = e('input.volume_range')
@@ -248,6 +147,29 @@ var __main = function () {
     // 当音量进度条的值改变的时候，音量的大小改变
     // log("volume_range change")
     v.volume = volume_range.value/100
+  })
+
+  // 音量图标 img
+  var volume_off = function() {
+    log('静音')
+    volumeButtons[1].classList.remove('none')
+    volumeButtons[0].classList.add('none')
+    v.volume = 0
+  }
+
+  bindEvent(volumeButtons[0], 'click', volume_off)
+
+  bindEvent(volumeButtons[1], 'click', function() {
+    volumeButtons[0].classList.remove('none')
+    volumeButtons[1].classList.add('none')
+    log('取消静音')
+    v.volume = .8
+  })
+
+  // 目前没有直接全屏的方法，但 electron 有
+  var fullscreen_button = e('#id-img-fullscreen')
+  bindEvent(fullscreen_button, 'click', function() {
+    log('fullscreen，要用 electron 提供的 api 才行')
   })
 
 }
