@@ -11,9 +11,14 @@ var __main = function () {
     playBefore()
   })
 
-  bindEvent(playButtons[0], 'click', v.play())
+  // log('playButtons', playButtons)
+  bindEvent(playButtons[0], 'click', function() {
+    v.play()
+  })
 
-  bindEvent(playButtons[1], 'click', v.pause())
+  bindEvent(playButtons[1], 'click', function() {
+    v.pause()
+  })
 
   bindEvent(play_next_button, 'click', function() {
     log("下一个")
@@ -169,7 +174,8 @@ var __main = function () {
   // 目前没有直接全屏的方法，但 electron 有
   var fullscreen_button = e('#id-img-fullscreen')
   bindEvent(fullscreen_button, 'click', function() {
-    log('fullscreen，要用 electron 提供的 api 才行')
+    log('fullscreen,用webkit提供的方法，会进入一种强制的全屏状态，使用其内置的控制栏')
+    v.webkitRequestFullScreen()
   })
 
 }

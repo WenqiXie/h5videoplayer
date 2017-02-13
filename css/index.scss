@@ -1,0 +1,220 @@
+@charset "UTF-8";
+
+.none {
+  display: none;
+}
+
+.w {
+  position: relative;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  /*border: 1px #eee solid;*/
+}
+
+$bgc : #eee;
+
+header {
+  position: absolute;
+  height: 25px;
+  width: 100%;
+  z-index: 10;
+  background-color: $bgc;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 1s;
+  &:hover {
+    opacity: 0.5;
+    /*background-color: pink;*/
+  }
+}
+
+.controls {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 0 12px;
+  /*margin: 2px 0;*/
+  /*box-sizing: border-box;
+  border: 1px solid #333;
+  background-color: #444;*/
+  background-color: $bgc;
+  transition: opacity 1s;
+  opacity: 0;
+  text-align: center;
+  &:hover {
+    opacity: 1;
+  }
+  img {
+    width: 24px;
+    cursor: pointer;
+  }
+  .playButtons > img {
+    width: 35px;
+  }
+  .volume_icon > img {
+    width: 14px;
+  }
+  > img#id-img-fullscreen {
+    position: absolute;
+    right: 10px;
+    width: 15px;
+    padding: 10px 10px 5px 0;
+  }
+}
+
+/* 这个是进度条 */
+.progress_bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+  width: 100%;
+  padding: 0 30px;
+  /*background-color: pink;*/
+  > {
+    #id-video-currentTime {
+      position: absolute;
+      left: 3px;
+    }
+    #id-video-duration {
+      position: absolute;
+      top: 0px;
+      right: 3px;
+    }
+  }
+}
+
+input#id-input-progress_bar {
+  display: inline-block;
+  width: 100%;
+}
+
+/* 播放速率条 */
+
+.playbackRate {
+  position: absolute;
+  top: 23px;
+  left: 5px;
+  box-sizing: border-box;
+  width: 100px;
+  > {
+    img {
+      width: 18px;
+    }
+    input#id-video-playbackRate {
+      width: 50px;
+    }
+    span {
+      position: absolute;
+      display: none;
+      top: 2px;
+      left: 93px;
+      vertical-align: middle;
+    }
+  }
+  &:hover > span {
+    display: inline;
+  }
+}
+
+input.volume_range {
+  vertical-align: middle;
+  width: 80px;
+}
+
+/*以下是 播放列表区域 的css*/
+
+section {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 138px;
+  /*height: 100%;*/
+  background-color: #ddd;
+  /*transition: all 1s;*/
+  > input {
+    width: 134px;
+  }
+}
+
+li {
+  /*display: inline-block;*/
+  position: relative;
+  width: 115px;
+  line-height: 21px;
+  padding: 2px 16px 2px 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #ccc;
+  font-size: 14px;
+  color: #222;
+  text-overflow: ellipsis;
+  /*文字隐藏后添加省略号*/
+  -moz-user-select: none;
+  /*火狐*/
+  -webkit-user-select: none;
+  /*webkit浏览器*/
+  -ms-user-select: none;
+  /*IE10*/
+  user-select: none;
+  &:hover {
+    background-color: #bbb;
+    color: #000;
+    cursor: default;
+  }
+}
+
+.active {
+  background-color: #bbb;
+}
+
+li > img {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 15px;
+  opacity: .1;
+  &:hover {
+    background-color: #ddd;
+    opacity: .9;
+  }
+}
+
+.videoList > span {
+  display: none;
+  position: absolute;
+  padding: 5px;
+  background-color: #fff;
+  box-shadow: 3px 3px 7px 1px #000000;
+  font-size: 14px;
+}
+
+.hiddenSection {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  background-color: #cbcbcb;
+  height: 100px;
+  width: 30px;
+  transform: translateY(-50%);
+  /*visibility: hidden;*/
+  opacity: 0;
+  &:hover {
+    opacity: .5;
+  }
+  > img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 30px;
+    width: 18px;
+    transform: translate(-50%, -50%) rotate(180deg);
+    transition: all 0.5s;
+  }
+}
