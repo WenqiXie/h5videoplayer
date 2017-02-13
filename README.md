@@ -16,4 +16,4 @@
 
 2月13日，全屏功能目前使用的是 webkit 的 API，会只能使用其默认的播放控件，用 sass 改写了 css，还不是很好看
 
-[播放器图例](https://github.com/VinciXie/h5videoplayer/tree/master/img/播放器图例.png)
+![image](https://github.com/VinciXie/h5videoplayer/tree/master/img/播放器图例.png)
