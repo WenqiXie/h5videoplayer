@@ -16,7 +16,6 @@
 
 2月13日，全屏功能目前使用的是 webkit 的 API，会只能使用其默认的播放控件
 
-<<<<<<< HEAD
 目前提供的是未打包的文件，可以看到源码，使用时需要 Electron 的运行环境
 
 ![image](https://github.com/VinciXie/h5videoplayer/tree/master/img/electron-h5videoplayer.png)
