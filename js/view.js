@@ -28,7 +28,9 @@ var changeSize = function() {
   // header.style.cssText = `width:${winHeight}px;`
 }
 
-window.addEventListener("resize", changeSize)
+  window.addEventListener("resize", changeSize)
+
+// ***********显示隐藏播放列表功能************
 bindEvent(hiddenSection, 'click', function() {
   if (section.classList[0] == 'none') {
     log('click,显示列表')
@@ -43,7 +45,6 @@ bindEvent(hiddenSection, 'click', function() {
   }
 })
 
-// ***********显示隐藏播放列表功能************
 section.addEventListener('mouseover', function() {
   // log("mouseover section")
   hiddenSection.style.opacity = ".8"

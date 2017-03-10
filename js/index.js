@@ -174,8 +174,8 @@ var __main = function () {
   // 目前没有直接全屏的方法，但 electron 有
   var fullscreen_button = e('#id-img-fullscreen')
   bindEvent(fullscreen_button, 'click', function() {
-    log('fullscreen,用webkit提供的方法，会进入一种强制的全屏状态，使用其内置的控制栏')
-    v.webkitRequestFullScreen()
+    document.body.webkitRequestFullScreen()
+    // document.webkitCancelFullScreen(); 取消全屏，下次加上
   })
 
 }

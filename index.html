@@ -14,29 +14,28 @@
       <header>
         MALAYSIA CHABOR by Joyce Chu.mp4
       </header>
-      <!-- <video data-i="0">
-        <source src="video/MALAYSIA CHABOR by Joyce Chu.mp4">
-        您的浏览器不支持 video 标签
-      </video> -->
       <video src="" data-i="">
         您的浏览器不支持 video 标签
       </video>
       <!-- 控制区域 -->
       <div class="controls">
         <!-- 播放速率调节 -->
-        <div class="playbackRate">
+        <div class="playbackRate" title="播放速率">
           <img src="icon/飞机.png" alt="">
-          <input id="id-video-playbackRate" type="range" name="" max="4" step="0.2" value="1">
+          <input id="id-video-playbackRate" type="range" max="4" step="0.2" value="1">
           <span id="id-span-playbackRate">1</span>
         </div>
-        <img id="id-img-stop" src="icon/stop.png" alt="">
-        <img id="id-img-before" src="icon/next.png" style="transform: rotate(180deg)" alt="">
+        <!-- 停止和上一曲 -->
+        <img id="id-img-stop" src="icon/stop.png" alt="停止" title="停止">
+        <img id="id-img-before" src="icon/next.png" style="transform: rotate(180deg)" alt="上一曲" title="上一曲">
         <!-- 播放和暂停按钮 -->
         <span class="playButtons">
-          <img src="icon/play1.svg" alt="play">
-          <img class="none" src="icon/pause1.svg" alt="pause">
+          <img src="icon/play1.svg" alt="play" title="播放">
+          <img class="none" src="icon/pause1.svg" alt="pause" title="暂停">
         </span>
-        <img id="id-img-next" src="icon/next.png" alt="">
+        <!-- 下一曲 -->
+        <img id="id-img-next" src="icon/next.png" alt="下一曲" title="下一曲">
+        <!-- 音量调节 -->
         <span class="volume_icon">
           <img src="icon/volume_on.png" alt="">
           <img class="none" src="icon/volume_off.png" alt="">
@@ -48,7 +47,7 @@
           <input type="range" id="id-input-progress_bar" name="" max="100" value="0">
           <span id="id-video-duration">--:--</span>
         </div>
-        <img id="id-img-fullscreen" src="icon/fullscreen.png" alt="">
+        <img id="id-img-fullscreen" src="icon/fullscreen.png" alt="全屏" title="全屏">
       </div>
       <div class="hiddenSection">
         <img src="icon/left.png" alt="">
