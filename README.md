@@ -18,7 +18,7 @@
 
 目前提供的是未打包的文件，可以看到源码，使用时需要 Electron 的运行环境
 
-![image](https://github.com/VinciXie/h5videoplayer/tree/master/img/electron-h5videoplayer.png)
+![界面示例](https://github.com/VinciXie/h5videoplayer/tree/master/img/electron-h5videoplayer.png)
 
 
 <!--
